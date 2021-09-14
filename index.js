@@ -7,7 +7,8 @@ const products = [
     { id: 1, name: "Mango" },
     { id: 2, name: "Banana" },
     { id: 3, name: "Apple" },
-    { id: 4, name: "Lichi" }
+    { id: 4, name: "Lichi" },
+    { id: 5, name: "Jackfruits" }
 ];
 
 app.get('/', (req, res) => {
