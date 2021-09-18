@@ -1,20 +1,6 @@
 const express = require('express');
 const router = express.Router(); //this will called the get, post etc method
-const Joi = require('joi'); //its return a class from joi module so Joi is starts with upper case
-const mongoose = require('mongoose');
-
-//creating a schema
-const productSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: true,
-        minlength: 5,
-        maxlength: 100
-    }
-});
-
-//creating a model
-const Product = new mongoose.model('Product', productSchema);
+const { Product, validate } = require('../models/product');
 
 //for getting all product
 router.get('/', async(req, res) => {
@@ -39,7 +25,7 @@ router.delete('/:id', async(req, res) => {
 
 //creating new record
 router.post('/', async(req, res) => {
-    const { error } = validateProduct(req.body);
+    const { error } = validate(req.body);
     if (error) return res.status(400).send(error.details[0].message);
 
     let product = new Product({ name: req.body.name });
@@ -49,7 +35,7 @@ router.post('/', async(req, res) => {
 
 //for updating the existing data
 router.put('/:id', async(req, res) => {
-    const { error } = validateProduct(req.body);
+    const { error } = validate(req.body);
     if (error) return res.status(400).send(error.details[0].message);
 
     const product = await Product.findByIdAndUpdate(req.params.id, { name: req.body.name },{
@@ -61,14 +47,6 @@ router.put('/:id', async(req, res) => {
     res.send(product);
 });
 
-function validateProduct(product) {
-    const schema = Joi.object({
-        name: Joi.string()
-            .min(3)
-            .required()
-    });
-    return schema.validate(product);
-}
 
 
 module.exports = router;
