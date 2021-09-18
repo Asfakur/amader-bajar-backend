@@ -18,3 +18,7 @@ $ npm install joi
 
 
 const Joi = require('joi'); //its return a class from joi module so Joi is starts with upper case
+
+### MongoDB start by mongoose https://www.npmjs.com/package/mongoose
+
+$ npm install mongoose
