@@ -7,8 +7,8 @@ const products = require('./routes/products'); //load the products module
 const home = require('./routes/home');
 
 
-app.use('/', home);
-app.use('/api/products', products);
+app.use('/', home); //calling the home module
+app.use('/api/products', products); //use the products module
 
 
 app.get('/', (req, res) => {
