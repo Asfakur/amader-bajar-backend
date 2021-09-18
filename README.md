@@ -22,3 +22,11 @@ const Joi = require('joi'); //its return a class from joi module so Joi is start
 ### MongoDB start by mongoose https://www.npmjs.com/package/mongoose
 
 $ npm install mongoose
+
+### .env to set environment variable  https://www.npmjs.com/package/dotenv
+
+$ npm install dotenv
+
+in index.js file
+
+require('dotenv').config()

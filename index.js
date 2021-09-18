@@ -2,12 +2,16 @@ const express = require("express");
 const app = express();
 const mongoose = require('mongoose');
 app.use(express.json()); //it must be needed to enable parsing for getting data from post body
+require('dotenv').config();
 
 const products = require('./routes/products'); //load the products module
 const home = require('./routes/home');
 
+
 //connect to mongoDB
-mongoose.connect('mongodb://localhost/amader-bajar')
+const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.jzd7k.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
+// const uri = 'mongodb://localhost/amader-bajar';
+mongoose.connect(uri)
     .then(() => console.log('Connected to MongoDB...'))
     .catch((err) => console.log('Could not connect to MongoDB..', err.message));
 
