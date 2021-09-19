@@ -7,6 +7,7 @@ require('dotenv').config();
 const products = require('./routes/products'); //load the products module
 const home = require('./routes/home');
 const customers = require('./routes/customers');
+const categories = require('./routes/categories');
 
 
 //connect to mongoDB
@@ -20,6 +21,7 @@ mongoose.connect(uri)
 app.use('/', home); //calling the home module
 app.use('/api/products', products); //use the products module
 app.use('/api/customers', customers);
+app.use('/api/categories', categories);
 
 
 const port = process.env.PORT || 5000;
