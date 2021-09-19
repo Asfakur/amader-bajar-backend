@@ -1,5 +1,6 @@
 const Joi = require('joi'); //its return a class from joi module so Joi is starts with upper case
 const mongoose = require('mongoose');
+const { categorySchema } = require('./category');
 
 //creating a schema
 const productSchema = new mongoose.Schema({
@@ -7,7 +8,29 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: true,
         minlength: 5,
-        maxlength: 100
+        maxlength: 255
+    },
+    category: {
+        type: categorySchema,
+        required: true
+    },
+    numberInStock: {
+        type: Number,
+        required: true,
+        min: 0,
+        max: 255
+    },
+    orderRate: {
+        type: Number,
+        required: false,
+        min: 0,
+        max: 255
+    },
+    price: {
+        type: Number,
+        required: true,
+        min: 0,
+        max: 255
     }
 });
 
@@ -16,9 +39,11 @@ const Product = new mongoose.model('Product', productSchema);
 
 function validateProduct(product) {
     const schema = Joi.object({
-        name: Joi.string()
-            .min(3)
-            .required()
+        name: Joi.string().min(3).required(),
+        categoryId: Joi.string().required(),
+        numberInStock: Joi.number().min(0).required(),
+        orderRate: Joi.number().min(0),
+        price: Joi.number().min(0).required()
     });
     return schema.validate(product);
 }
