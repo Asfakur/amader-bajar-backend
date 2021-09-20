@@ -3,11 +3,14 @@ const app = express();
 const mongoose = require('mongoose');
 app.use(express.json()); //it must be needed to enable parsing for getting data from post body
 require('dotenv').config();
+const Joi = require('joi');
+Joi.objectId = require('joi-objectid')(Joi) //objectId validator https://www.npmjs.com/package/joi-objectid
 
 const products = require('./routes/products'); //load the products module
 const home = require('./routes/home');
 const customers = require('./routes/customers');
 const categories = require('./routes/categories');
+const orders = require('./routes/orders');
 
 
 //connect to mongoDB
@@ -22,6 +25,7 @@ app.use('/', home); //calling the home module
 app.use('/api/products', products); //use the products module
 app.use('/api/customers', customers);
 app.use('/api/categories', categories);
+app.use('/api/orders', orders);
 
 
 const port = process.env.PORT || 5000;

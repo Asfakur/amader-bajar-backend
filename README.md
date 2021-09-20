@@ -30,3 +30,8 @@ $ npm install dotenv
 in index.js file
 
 require('dotenv').config()
+
+
+### joi-objectid for mongoDB objectId validator https://www.npmjs.com/package/joi-objectid
+
+$ npm install joi-objectid
