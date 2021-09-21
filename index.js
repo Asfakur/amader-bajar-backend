@@ -11,6 +11,8 @@ const home = require('./routes/home');
 const customers = require('./routes/customers');
 const categories = require('./routes/categories');
 const orders = require('./routes/orders');
+const users = require('./routes/users');
+const auth = require('./routes/auth');
 
 
 //connect to mongoDB
@@ -26,6 +28,8 @@ app.use('/api/products', products); //use the products module
 app.use('/api/customers', customers);
 app.use('/api/categories', categories);
 app.use('/api/orders', orders);
+app.use('/api/users', users);
+app.use('/api/auth', auth);
 
 
 const port = process.env.PORT || 5000;

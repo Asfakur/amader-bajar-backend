@@ -35,3 +35,15 @@ require('dotenv').config()
 ### joi-objectid for mongoDB objectId validator https://www.npmjs.com/package/joi-objectid
 
 $ npm install joi-objectid
+
+### lodash for pick up and validation https://www.npmjs.com/package/lodash
+
+$ npm i lodash
+
+### bycrypt is used for password encryption https://www.npmjs.com/package/bcrypt
+
+$ npm install bcrypt
+
+### jsonwebtoken is used to send token from backend to frontend https://www.npmjs.com/package/jsonwebtoken
+
+$ npm install jsonwebtoken
