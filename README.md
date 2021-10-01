@@ -47,3 +47,10 @@ $ npm install bcrypt
 ### jsonwebtoken is used to send token from backend to frontend https://www.npmjs.com/package/jsonwebtoken
 
 $ npm install jsonwebtoken
+
+## https://expressjs.com/en/resources/middleware/cors.html
+$ npm i cors
+` const cors = require('cors');
+app.use(cors()) `
+
+//Product model updated

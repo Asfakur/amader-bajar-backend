@@ -39,9 +39,12 @@ router.post('/', async (req, res) => {
             _id: category._id,
             name: category.name
         },
-        numberInStock: req.body.numberInStock,
         price: req.body.price,
-        orderRate: req.body.orderRate
+        details: req.body.details,
+        numberInStock: req.body.numberInStock,
+        popularity: req.body.popularity,
+        image: req.body.image,
+        deleteImage: req.body.deleteImage
     });
 
     product = await product.save();
@@ -62,9 +65,12 @@ router.put('/:id', async (req, res) => {
             _id: category._id,
             name: category.name
         },
-        numberInStock: req.body.numberInStock,
         price: req.body.price,
-        orderRate: req.body.orderRate
+        details: req.body.details,
+        numberInStock: req.body.numberInStock,
+        popularity: req.body.popularity,
+        image: req.body.image,
+        deleteImage: req.body.deleteImage
     }, { new: true });
 
     if (!product) return res.status(404).send("The product with the given Id is not found");

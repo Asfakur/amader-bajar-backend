@@ -1,7 +1,9 @@
 const express = require("express");
 const app = express();
 const mongoose = require('mongoose');
+const cors = require('cors')
 app.use(express.json()); //it must be needed to enable parsing for getting data from post body
+app.use(cors());
 require('dotenv').config();
 const Joi = require('joi');
 Joi.objectId = require('joi-objectid')(Joi) //objectId validator https://www.npmjs.com/package/joi-objectid
