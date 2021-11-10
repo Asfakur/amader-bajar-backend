@@ -54,3 +54,6 @@ $ npm i cors
 app.use(cors()) `
 
 //Product model updated
+
+const { isValidObjectId } = require('mongoose');
+if (!isValidObjectId(req.params.id)) return res.status(400).send("Object id is wrong");

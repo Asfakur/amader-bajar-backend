@@ -18,8 +18,8 @@ const auth = require('./routes/auth');
 
 
 //connect to mongoDB
-// const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.jzd7k.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
-const uri = 'mongodb://localhost/amader-bajar';
+const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.jzd7k.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
+// const uri = 'mongodb://localhost/amader-bajar';
 mongoose.connect(uri)
     .then(() => console.log('Connected to MongoDB...'))
     .catch((err) => console.log('Could not connect to MongoDB..', err.message));
