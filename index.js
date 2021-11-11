@@ -17,6 +17,8 @@ const users = require('./routes/users');
 const auth = require('./routes/auth');
 
 
+const port = process.env.PORT || 5000;
+
 //connect to mongoDB
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.jzd7k.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
 // const uri = 'mongodb://localhost/amader-bajar';
@@ -34,8 +36,8 @@ app.use('/api/users', users);
 app.use('/api/auth', auth);
 
 
-const port = process.env.PORT || 5000;
+// const port = process.env.PORT || 5000;
 
-app.listen(5000, () => {
+app.listen(port, () => {
     console.log(`The server is listening at http://localhost:${port}`);
 })
