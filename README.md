@@ -57,3 +57,8 @@ app.use(cors()) `
 
 const { isValidObjectId } = require('mongoose');
 if (!isValidObjectId(req.params.id)) return res.status(400).send("Object id is wrong");
+
+$ npm install config
+
+before running this we have to pass a key in terminal
+$ export amaderBajar_jwtPrivateKey=123

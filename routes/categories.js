@@ -1,3 +1,5 @@
+const auth = require('../middleware/auth');
+const admin = require('../middleware/admin');
 const express = require('express');
 const { isValidObjectId } = require('mongoose');
 const router = express.Router();
@@ -8,7 +10,9 @@ router.get('/', async (req, res) => {
   res.send(category);
 });
 
-router.post('/', async (req, res) => {
+router.post('/', auth, async (req, res) => {
+
+
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
@@ -32,7 +36,7 @@ router.put('/:id', async (req, res) => {
   res.send(category);
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', [auth, admin], async (req, res) => {
   if (!isValidObjectId(req.params.id)) return res.status(400).send("Object id is wrong");
 
   const category = await Category.findByIdAndRemove(req.params.id);
