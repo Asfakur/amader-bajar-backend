@@ -16,6 +16,7 @@ const categories = require('./routes/categories');
 const orders = require('./routes/orders');
 const users = require('./routes/users');
 const auth = require('./routes/auth');
+const checkout = require('./routes/checkout');
 
 
 const port = process.env.PORT || 5000;
@@ -26,8 +27,8 @@ if (!config.get('jwtPrivateKey')) {
 }
 
 //connect to mongoDB
-// const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.jzd7k.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
-const uri = 'mongodb://localhost/amader-bajar';
+const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.jzd7k.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
+// const uri = 'mongodb://localhost/amader-bajar';
 mongoose.connect(uri)
     .then(() => console.log('Connected to MongoDB...'))
     .catch((err) => console.log('Could not connect to MongoDB..', err.message));
@@ -40,6 +41,7 @@ app.use('/api/categories', categories);
 app.use('/api/orders', orders);
 app.use('/api/users', users);
 app.use('/api/auth', auth);
+app.use('/api/checkout', checkout);
 
 
 // const port = process.env.PORT || 5000;

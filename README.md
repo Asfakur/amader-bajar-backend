@@ -62,3 +62,7 @@ $ npm install config
 
 before running this we have to pass a key in terminal
 $ export amaderBajar_jwtPrivateKey=123
+
+$ npm install uuid
+
+$ npm i stripe
