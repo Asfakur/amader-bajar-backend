@@ -26,7 +26,8 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: false,
         minlength: 2,
-        maxlength: 50
+        maxlength: 50,
+        default: "Admin"
     }
 });
 
