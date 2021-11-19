@@ -27,7 +27,7 @@ const userSchema = new mongoose.Schema({
         required: false,
         minlength: 2,
         maxlength: 50,
-        default: "Admin"
+        default: "customer"
     }
 });
 

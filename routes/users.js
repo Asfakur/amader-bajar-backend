@@ -27,7 +27,6 @@ router.post('/', async (req, res) => {
     //token generation for direct register to login
     const token = user.generateAuthToken(); //its needs the userSchema validation
 
-
     res
         .header("x-auth-token", token)
         .header("access-control-expose-headers", "x-auth-token")
