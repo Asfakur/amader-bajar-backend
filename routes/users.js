@@ -16,7 +16,7 @@ router.post('/', async (req, res) => {
     let user = await User.findOne({ email: req.body.email });
     if (user) return res.status(400).send('User already registered.');
 
-    user = new User(_.pick(req.body, ['name', 'email', 'password']));
+    user = new User(_.pick(req.body, ['name', 'email', 'password', 'phone']));
 
     await user.save();
 
@@ -32,5 +32,15 @@ router.post('/', async (req, res) => {
         .header("access-control-expose-headers", "x-auth-token")
         .send(_.pick(user, ['_id', 'name', 'email']));
 });
+
+router.get('/:id', async (req, res) => {
+    const user = await User.findById(req.params.id);
+
+    if (!user) return res.status(404).send('The customer with the given id was not found.');
+
+    const customerInfo = _.pick(user, 'name', 'email', 'phone', '_id');
+    console.log(customerInfo);
+    res.send(customerInfo);
+})
 
 module.exports = router;

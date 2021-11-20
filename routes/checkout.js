@@ -1,12 +1,35 @@
 const express = require('express');
+const { isValidObjectId } = require('mongoose');
 const router = express.Router();
 const { v4: uuidv4 } = require('uuid');
 const { PaidOrder } = require('../models/paidOrder');
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
-router.get("/", (req, res) => {
-    res.send("Working checkout api");
+
+router.get('/', async (req, res) => {
+    const checkoutOrders = await PaidOrder.find().sort('-orderDate');
+    res.send(checkoutOrders);
 });
+
+router.get('/:id', async (req, res) => {
+    const checkoutOrder = await PaidOrder.find({
+        customerId: req.params.id
+    });
+
+    if (!checkoutOrder) return res.status(404).send('The order with the given ID was not found.');
+
+    res.send(checkoutOrder);
+});
+
+router.put('/:id', async (req, res) => {
+    if (!isValidObjectId(req.params.id)) return res.status(400).send("Object id is wrong");
+    const paidOrder = await PaidOrder.findByIdAndUpdate(req.params.id, { orderStatus: req.body.orderStatus }, {
+        new: true
+    })
+    if (!paidOrder) return res.status(404).send('The order with the given ID was not found.');
+    res.send(paidOrder);
+});
+
 
 function setPaymentInfo(result) {
     const { id, balance_transaction, billing_details, amount, currency } = result;
@@ -39,10 +62,11 @@ function setOrderInfo(productDetails, customerDetails, paymentResponse) {
 router.post("/", async (req, res) => {
     // console.log("Request body", req.body);
     let error;
-    let isSuccess;
+    let paymentDone;
     let response;
     let orderInfo;
     let orderSaved;
+    let orderSavedToDb;
 
 
     try {
@@ -77,33 +101,36 @@ router.post("/", async (req, res) => {
             });
 
         // console.log("Charged: ", { charge });
-        isSuccess = true;
+        paymentDone = true;
         response = charge;
 
         if (charge.status === "succeeded") {
-            console.log("payment done");
+            // console.log("payment done");
             orderInfo = setOrderInfo(productDetails, customerDetails, charge)
 
             try {
                 let newOrder = new PaidOrder(orderInfo);
                 newOrder = await newOrder.save();
-                console.log(newOrder);
+                // console.log(newOrder);
                 orderSaved = newOrder;
+
+                orderSavedToDb = true;
 
             } catch (ex) {
                 console.log(ex);
+                orderSavedToDb = false;
             }
 
         }
 
     }
     catch (error) {
-        console.error("Error", error);
-        isSuccess = false;
+        // console.error("Error", error);
+        paymentDone = false;
     }
-    res.send({ error, isSuccess, response, orderInfo, orderSaved });
+    res.send({ error, paymentDone, response, orderInfo, orderSaved, orderSavedToDb });
 
-    // if(isSuccess){
+    // if(paymentDone){
     //     try {
     //         let paidOrder = new PaidOrder({
     //             customerId: 
