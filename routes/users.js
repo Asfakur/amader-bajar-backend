@@ -2,11 +2,19 @@ const express = require('express');
 const router = express.Router();
 const { User, validate } = require('../models/user');
 const _ = require('lodash'); //here _ underscore is the object we use it for convention
+const { isValidObjectId } = require('mongoose');
 // const bcrypt = require('bcrypt'); //hashing object https://www.npmjs.com/package/bcrypt
 
 router.get('/', async (req, res) => {
     const users = await User.find().sort('name');
-    res.send(users);
+    let pickedUsers = [];
+    // const pickedUser = _.pick(users, ['_id', 'name', 'email', 'phone', 'userType']);
+    for (let user of users) {
+        user = _.pick(user, ['_id', 'name', 'email', 'phone', 'userType']);
+        pickedUsers.push(user);
+    }
+
+    res.send(pickedUsers);
 });
 
 router.post('/', async (req, res) => {
@@ -42,5 +50,14 @@ router.get('/:id', async (req, res) => {
     console.log(customerInfo);
     res.send(customerInfo);
 })
+
+router.put('/:id', async (req, res) => {
+    if (!isValidObjectId(req.params.id)) return res.status(400).send("Object id is wrong");
+    const user = await User.findByIdAndUpdate(req.params.id, { userType: req.body.userType }, {
+        new: true
+    })
+    if (!user) return res.status(404).send('The order with the given ID was not found.');
+    res.send(user);
+});
 
 module.exports = router;
